@@ -61,6 +61,25 @@ export default function App() {
     setFormData(prev => ({ ...prev, [field]: value }));
   };
 
+  const handleShare = async () => {
+    const shareData = {
+      title: 'VoltWarangal Early Access',
+      text: "I just joined the early access list for VoltWarangal! ⚡️ They're building a smarter EV charging network for Warangal. Join me here:",
+      url: window.location.href,
+    };
+
+    try {
+      if (navigator.share) {
+        await navigator.share(shareData);
+      } else {
+        await navigator.clipboard.writeText(`${shareData.text} ${shareData.url}`);
+        alert('Share link copied to clipboard!');
+      }
+    } catch (err) {
+      console.error('Error sharing:', err);
+    }
+  };
+
   if (isSubmitted) {
     return (
       <div className="min-h-screen bg-slate-950 flex items-center justify-center p-6 bg-[radial-gradient(circle_at_50%_40%,rgba(34,197,94,0.15),transparent_50%)]">
@@ -90,8 +109,8 @@ export default function App() {
               <p className="text-xs font-bold uppercase tracking-[0.2em] text-slate-500">Help us grow</p>
               <div className="grid grid-cols-2 gap-3">
                 <button 
-                  onClick={() => alert('Share functionality would go here!')}
-                  className="flex items-center justify-center gap-2 bg-slate-800 hover:bg-slate-700 text-white rounded-2xl py-4 transition-all"
+                  onClick={handleShare}
+                  className="flex items-center justify-center gap-2 bg-slate-800 hover:bg-slate-700 text-white rounded-2xl py-4 transition-all active:scale-95"
                 >
                   <Share2 className="w-4 h-4" /> Share
                 </button>
