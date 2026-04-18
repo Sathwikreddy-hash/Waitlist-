@@ -76,7 +76,9 @@ export default function App() {
         alert('Share link copied to clipboard!');
       }
     } catch (err) {
-      console.error('Error sharing:', err);
+      if (err instanceof Error && err.name !== 'AbortError') {
+        console.error('Error sharing:', err);
+      }
     }
   };
 
